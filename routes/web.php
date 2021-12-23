@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TodoListController::class, 'index']);
 
-Route::get('/test', function () {
-    return view('header', ['records' => 1]);
-});
+Route::post('/saveItemRoute', [TodoListController::class, 'saveItem'])->name('saveItem');
+
+Route::post('/checkTaskRoute/{id}', [TodoListController::class, 'checkTask'])->name('checkTask');

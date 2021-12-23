@@ -7,17 +7,44 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/app.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <title>Todo List</title>
   </head>
   <body>
-    <h1>Todo List</h1>
-    <form>
-      <label for="task">New task</label>
-      <input type="text" id="task" name="task">
-      <input type="button">
-    </form>
+    <div class="form-container"> 
+
+      <h1>To-do List</h1>
+
+      @foreach ($listItems as $listItem)
+      
+        <div class="row mb-2">
+
+          <div class="col-9">
+            <p>Task: {{ $listItem->name }} </p> 
+          </div>
+
+          <div class="col-3">
+              <form class="form-inline justify-content-end" action="{{ route('checkTask', $listItem->id) }}" method="POST" accept-charset="UTF-8">
+                {{ csrf_field() }}
+                <button class="btn btn-primary">Check!</button>
+              </form>
+          </div>
+
+        </div>
+
+      @endforeach
+
+        <form class="form-groups" method="POST" action="{{ route('saveItem') }}" accept-charset="UTF-8">
+          {{ csrf_field() }}
+
+          <input type="text" id="item" name="item" class="form-control mb-2" placeholder="Add new task">
+          <button value="Submit" class="btn btn-primary">Add</button>
+
+        </form>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
